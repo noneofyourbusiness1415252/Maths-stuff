@@ -38,10 +38,12 @@ while start =='4':
       cubes = cubes + 1 
       squarenums = squarenums,str(l)
       cubenums = cubenums,str(l) 
-    elif SquareorCube(l)=='is a cube number.':
+  for l in range (num1,num2+1):
+    if SquareorCube(l)=='is a cube number.':
       cubes = cubes + 1
       cubenums = cubenums,str(l)
-    elif SquareorCube(l)=='is a square number.':
+  for l in range (num1,num2+1):
+    if SquareorCube(l)=='is a square number.':
       squares = squares + 1
       squarenums = squarenums,str(l)  
   print('There are',cubes,'cube numbers, and',squares,'square numbers between',num1, 'and',num2,'.')
