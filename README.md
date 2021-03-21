@@ -8,5 +8,5 @@ When finding squares/cubes/primes/composites in a certain range, the first numbe
 Currently, the option to find squares, cubes, composites and primes is buggy with brackets and apostrophes everywhere, so just ignore all the brackets and apostrophes then it'll make sense.  
 Hope you like this tool! Have a good day!
 ![Screenshot demonstrating program](https://www.bing.com/images/blob?bcid=RKJT5ECuUIcCFA "program in action!")
-https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1
+https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1  
 https://github.com/noneofyourbusiness1415252/Maths-stuff
