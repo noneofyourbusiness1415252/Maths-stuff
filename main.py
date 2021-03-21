@@ -1,12 +1,11 @@
-start = input('Hello. This is a tool to find more about numbers. What do you want to do? Type in a number to go to one of these programs. \n Type 1 to find out if a number is prime or composite \n Type 2 to find out how many Prime numbers are between 2 numbers \n Type 3 to find out if a number is squared or cubed.\n Type 4 to find out how many squares and cubes there are between 2 numbers.\n')
+start = input('Hello. This is a tool to find more about numbers. What do you want to do? Type in a number to go to one of these modes: \n Type 1 to find out if a number is prime or composite \n Type 2 to find out how many Prime numbers are between 2 numbers \n Type 3 to find out if a number is squared or cubed.\n Type 4 to find out how many squares and cubes there are between 2 numbers.\n')
 from PrimeorComposite import *
 from SquareorCube import *
-if start == '1':
-  number = input('Enter a number\n')
-  if number == 'exit':
-    print('Exiting program. \n What?? repl process d...d... died?! ')
-    exit()   
+from SwitchMode import SwitchMode
+while start == '1': 
+  number = input('Enter a number.') 
   print(number, PrimeorComposite(int(number)))
+  SwitchMode()
 while start == '2':
     num1 = int(input('Enter the first number\n'))
     num2 = int(input('Enter the second number\n'))
@@ -21,12 +20,14 @@ while start == '2':
     else:
       print('there are', amount, 'prime numbers between', num1, 'and', num2)
     print(primes)
+    SwitchMode()
 while start == '3':
    number =  int(input('Enter a number to find whether it is squared or cubed!\n'))
    print(number,SquareorCube(number))
+   SwitchMode()
 while start =='4':
-  num1 = int(input('Enter a number\n'))
-  num2 = int(input('Enter another number.\n'))
+  num1 = int(input('Enter the first number\n'))
+  num2 = int(input('Enter the second number.\n'))
   cubes = 0
   squares = 0
   cubenums = 'The cube numbers between ', num1,'and',num2,'are:'
@@ -40,3 +41,4 @@ while start =='4':
       squarenums = squarenums,str(l)
   print('There are',cubes,'cube numbers, and',squares,'square numbers between',num1, 'and',num2,'.')
   print(cubenums,'\n',squarenums)
+  SwitchMode()
