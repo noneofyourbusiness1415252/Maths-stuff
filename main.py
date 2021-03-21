@@ -1,4 +1,4 @@
-start = input('Hello. This is a tool to find more about numbers. What do you want to do? Type in a number to go to one of these modes: \n Type 1 to find out if a number is prime or composite \n Type 2 to find out how many Prime numbers are between 2 numbers \n Type 3 to find out if a number is squared or cubed.\n Type 4 to find out how many squares and cubes there are between 2 numbers.\n')
+start = input('Hello. This is a tool to find more about numbers. What do you want to do? Type in a number to go to one of these modes: \nType 1 to find out if a number is prime or composite. \nType 2 to find out how many Prime numbers are between 2 numbers\nType 3 to find out if a number is squared or cubed.\nType 4 to find out how many squares and cubes there are between 2 numbers.\n')
 from PrimeorComposite import *
 from SquareorCube import *
 from SwitchMode import SwitchMode
@@ -33,12 +33,17 @@ while start =='4':
   cubenums = 'The cube numbers between ', num1,'and',num2,'are:'
   squarenums = 'The square numbers between', num1, 'and',num2,'are:'
   for l in range (num1,num2+1):
-    if SquareorCube(l)=='is a cube number.':
+    if SquareorCube(l)=='is both a square number and a cube number.':
+      squares = squares + 1
+      cubes = cubes + 1 
+      squarenums = squarenums,str(l)
+      cubenums = cubenums,str(l) 
+    elif SquareorCube(l)=='is a cube number.':
       cubes = cubes + 1
       cubenums = cubenums,str(l)
-    if SquareorCube(l)=='is a square number.':
+    elif SquareorCube(l)=='is a square number.':
       squares = squares + 1
-      squarenums = squarenums,str(l)
+      squarenums = squarenums,str(l)  
   print('There are',cubes,'cube numbers, and',squares,'square numbers between',num1, 'and',num2,'.')
   print(cubenums,'\n',squarenums)
   SwitchMode()

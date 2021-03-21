@@ -7,6 +7,6 @@ All inputs must be written in integers (whole numbers). For the switching modes 
 When finding squares/cubes/primes/composites in a certain range, the first number you will be asked for will be the **start** of the range, and the second number the **end** of the range, ***including itself***.  
 Currently, the option to find squares, cubes, composites and primes is buggy with brackets and apostrophes everywhere, so just ignore all the brackets and apostrophes then it'll make sense.  
 Hope you like this tool! Have a good day!
-![Screenshot demonstrating program](https://www.bing.com/images/blob?bcid=RKJT5ECuUIcCFA "program in action!")
-https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1  
+![Screenshot demonstrating program](https://www.bing.com/images/blob?bcid=RADoODU78ogClg "program in action!")
+To use this tool on replit, click [here] (https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1)  
 https://github.com/noneofyourbusiness1415252/Maths-stuff
