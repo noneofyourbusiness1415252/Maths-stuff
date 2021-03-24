@@ -5,7 +5,7 @@ from SwitchMode import *
 import random
 squareorcubelevel = 1
 primelevel = 1
-start = input('Hello. This is a tool to find more about numbers. What do you want to do? Type in a number to go to one of these modes: \nType 1 to find out if a number is prime or composite. \nType 2 to find out how many Prime numbers are between 2 numbers\nType 3 to find out if a number is squared or cubed.\nType 4 to find out how many squares and cubes there are between 2 numbers.\nType 5 for a quiz about primes and composites.\n Type 6 for a quiz about squares and cubes.\nPlease Go to code, then go to README.md for guidance and information.\n') 
+start = input('Hello. This is a tool to find more about numbers. What do you want to do? Type in a number to go to one of these modes: \nType 1 to find out if a number is prime or composite. \nType 2 to find out how many Prime numbers are between 2 numbers\nType 3 to find out if a number is squared or cubed.\nType 4 to find out how many squares and cubes there are between 2 numbers.\nType 5 for a quiz about primes and composites.\nType 6 for a quiz about squares and cubes.\nPlease go to code, thenn go to README.md for guidance and information.\n') 
 while start == '1': 
   number = input('Enter a number.') 
   print(number, PrimeorComposite(int(number)))
