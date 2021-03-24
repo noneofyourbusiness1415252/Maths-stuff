@@ -8,5 +8,5 @@ When finding squares/cubes/primes/composites in a certain range, the first numbe
 For the square/cube quiz, type *square* if you think it is square, *cube* if you think it is cube, *both* if you think it is both square and cube, and *no* if you think it is neither square nor cube.
 Hope you like this tool! Have a good day!
 ![Screenshot demonstrating program](https://www.bing.com/images/blob?bcid=RADoODU78ogClg "program in action!")
-To use this tool on replit, click [here] (https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1)  
-https://github.com/noneofyourbusiness1415252/Maths-stuff
+To use this tool on replit, click [here](https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1)  
+[Github repo](https://github.com/noneofyourbusiness1415252/Maths-stuff)
