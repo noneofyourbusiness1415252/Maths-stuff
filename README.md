@@ -1,5 +1,6 @@
 # Umar's Maths stuff
 ![Maths: the only place where people buy 64 watermelons and no-one knows why...](https://www.bing.com/images/blob?bcid=RLGht7PssYcCsA "the truest meme ever")
+Note: Please do not use this program yet; it is the development version. Use the [stable version](https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1) instead.
 Hello there and welcome to my Maths stuff!
 This program currently identifies primes, composites, squares and cubes from within a range of number/s that you specify.   
 To get started, just type a number from 1-4 to choose one of the options.   
