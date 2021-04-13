@@ -7,7 +7,7 @@ primelevel = 1
 nickname =input('Hello! Enter a nickname to save progress.\nIf you have used this tool before, enter the nickname you used last.\n')
 if not os.path.exists('UserAccounts/'+nickname):
   os.mkdir('UserAccounts/'+nickname)
-start = input('Hello, '+nickname+'. This is a tool to find more about numbers. What do you want to do? Type in a number to go to one of these modes: \nType 1 to find out if a number is prime or composite. \nType 2 to find out how many Prime numbers are between 2 numbers\nType 3 to find out if a number is squared or cubed.\nType 4 to find out how many squares and cubes there are between 2 numbers.\nType 5 for a quiz about primes and composites.\nType 6 for a quiz about squares and cubes.\nPlease go to code, then go to README.md for guidance and information.\n')
+start = input('Hello, '+nickname+'. This is a tool to find more about numbers. What do you want to do? Type in a number to go to one of these modes: \nType 1 to find out if a number is prime or composite. \nType 2 to find out how many Prime numbers are between 2 numbers\nType 3 to find out if a number is squared or cubed.\nType 4 to find out how many squares and cubes there are between 2 numbers.\nType 5 for a quiz about primes and composites.\nType 6 for a quiz about squares and cubes.\nPlease go to code, then go to README.md for guidance and information.\nI know about the quizzes not working past level 1  because the level system is broken and I am working on that now\nPlease report any bugs or feedback in the comments below, or on\n https://github.com/noneofyourbusiness1415252/Maths-stuff/issues\n')
 while start == '1':
 	number = input('Enter a number.')
 	print(number, PrimeorComposite(int(number)))
@@ -77,88 +77,71 @@ while start == '5':
 		text = 'Is ', str(rand), ' a prime number?\n'
 		answer = input(''.join(text))
 		if PrimeorComposite(rand) == 'is a prime number.':
-			if answer.upper() == 'YES':
-				print('Well done!')
-				score = score + 1
-			else:
-				print('Oops. Incorrect answer!')
+			correct = 'yes'
 		else:
-			if answer.upper() == 'NO':
-				print('Well done!')
-				score = score + 1
-			else:
-				print('Oops. Incorrect answer!')
+			correct = 'no'
+		if answer.upper()==correct:
+		  score=score+1
+		  print('Well done!')
+		else:
+		  print('Oops! Incorrect answer!')
 	if score > 9:
 		primelevel = primelevel + 1
-		primelevelup = 'Level up! You are now on level ', str(
-		    primelevel), '! Good work! You will now get harder questions!'
+		primelevelup = 'Level up! You are now on level ', str(primelevel), '! Good work! You will now get harder questions!'
 		print(''.join(primelevelup))
 		SwitchMode()
 while start == '6':
   with open('UserAccounts/'+nickname+'/SquareOrCubeLevel.txt','w+') as SOCL:
-    squareorcubelevel = SOCL.read()
-    if squareorcubelevel =='':
+    SOCLR = SOCL.read()
+    if SOCLR =='':
       squareorcubelevel=1
     else:
-      squareorcubelevel=int(SOCL.read())
+      squareorcubelevel=int(SOCLR)
+      print(squareorcubelevel)
   score = 0
   powers =() 
   nonpowers=()
   if squareorcubelevel ==1:
     randnum = random.randint(1,10)
-    nonpowers = [1,4,8,9]
+    powers = [1,4,8,9]
     nonpowers = [2,3,5,6,7,10]
   else:
-    for a in range((squareorcubelevel-1)**2*10+1,squareorcubelevel+1):
+    for a in range((squareorcubelevel-1)**2*10+1,squareorcubelevel**2*10):
        if SquareorCube(a)=='is not a square or cube number.':
-          nonpowers=[nonpowers, l]
+        nonpowers=[nonpowers, l]
        else:
-         powers=[powers, l]        
+        powers=[powers, l]    
   for a in range(10):
     powerornonpower=random.randint(1,3)
     powerornonpower = random.randint(1,3)
     if powerornonpower==1:
-      randnum = random.choice(nonpowers)
+      randnum = random.choice(powers)
     else:
       randnum=random.choice(nonpowers)
     text = 'Is '+ str(randnum)+ " a square number or cube number? Type 'both', 'square', 'cube' or 'no' accordingly. \n"
     answer = input(''.join(text))
     if SquareorCube(randnum) == 'is a power of 6, so it is both a square number and a cube number.':
-      if answer.upper() == 'BOTH':
-        print('Well done!!')
-        score = score + 1
-      else:
-        print('Oops! Incorrect answer!')
+      correct='both'
     elif SquareorCube(randnum) == 'is a square number.':
-      if answer.upper() == 'SQUARE':
-        print('Well done!')
-        score = score + 1
-      else:
-         print('Oops! Incorrect answer.')
+      correct='square'
     elif SquareorCube(randnum) == 'is a cube number.':
-      if answer.upper() == 'CUBE':
-        print('Well done!')
-        score = score + 1
-      else:
-        print('Oops! Incorrect answer!')
+      correct='cube'
     else:
-      if answer.upper() == 'NO':
-        print('Well done!')
-        score = score + 1
-      else:
-      	print('Oops. Incorrect answer!')
+      correct='no'
+    if answer.lower()==correct:
+      print('Well done!')
+      score=score+1
+    else:
+      print('Oops! The correct answer is:'+correct+'.')
   if score > 9:
-    squareorcubelevel = squareorcubelevel + 1
-    squarecubelevelup = 'Level up! You are now on level ' + str(
-    squareorcubelevel) + '. Good job!'
+    squareorcubelevel = squareorcubelevel +1
+    squarecubelevelup = 'Level up! You are now on level ' + str(squareorcubelevel) + '. Good job!'
     print(''.join(squarecubelevelup))
+    with open('UserAccounts/'+nickname+'/SquareOrCubeLevel.txt','w+') as SOCL:
+      SOCL.write(str(squareorcubelevel))
     SwitchMode()
-    with open('UserAccounts/'+nickname+'/SquareOrCubeLevel.txt'+'w+') as save:
-      save.write(squareorcubelevel)
-while start=='5':
-  bug=input('Please enter any bug you have encountered.')
-  with open('Bugs/'+nickname+'.txt','w+') as bugfile:
-    bugfile.write(bug)
-  print('Thank you for reporting bugs! I appreciate your help,'+nickname+'!')
+    
+
+
 
 

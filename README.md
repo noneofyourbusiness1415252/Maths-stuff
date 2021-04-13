@@ -1,6 +1,7 @@
 # Umar's Maths stuff
 ![Maths: the only place where people buy 64 watermelons and no-one knows why...](https://www.bing.com/images/blob?bcid=RLGht7PssYcCsA "the truest meme ever")
 Note: Please do not use this program yet; it is the development version. Use the [stable version](https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1) instead.
+Please report any bugs on [Github](https://github.com/noneofyourbusiness1415252/Maths-stuff/issues)
 Hello there and welcome to my Maths stuff!
 This program currently identifies primes, composites, squares and cubes from within a range of number/s that you specify.   
 To get started, just type a number from 1-4 to choose one of the options.   
@@ -10,4 +11,5 @@ For the square/cube quiz, type *square* if you think it is square, *cube* if you
 Hope you like this tool! Have a good day!
 ![Screenshot demonstrating program](https://www.bing.com/images/blob?bcid=RADoODU78ogClg "program in action!")
 To use this tool on replit, click [here](https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1)  
-[Github repo](https://github.com/noneofyourbusiness1415252/Maths-stuff)
+## Known issues
+The quiz doesn't work properly past level 1 because the progress system is broken. Use the stable version/branch (the one not marked with DEV) while I sort out the progress system, which is removed in the stable version
