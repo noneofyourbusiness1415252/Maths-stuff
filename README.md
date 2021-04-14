@@ -12,4 +12,3 @@ Hope you like this tool! Have a good day!
 ![Screenshot demonstrating program](https://www.bing.com/images/blob?bcid=RADoODU78ogClg "program in action!")
 To use this tool on replit, click [here](https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1)  
 ## Known issues
-The quiz doesn't work properly past level 1 because the progress system is broken. Use the stable version/branch (the one not marked with DEV) while I sort out the progress system, which is removed in the stable version

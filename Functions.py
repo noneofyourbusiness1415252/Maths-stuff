@@ -1,9 +1,21 @@
 def PrimeorComposite(n):
-  for i in range(2,int(n**0.5+1)):
-    if abs(n%i) == 0 or n==0 or n==1:
+  if n == 2 or n == 3:
+    return('is a prime number.')
+  if n < 2 or n%2 == 0:
+    return('is a composite number.')
+  if n < 9:
+    return('is a prime number.')
+  if n%3 == 0:
+    return('is a composite number.')
+  r = int(n**0.5)
+  f = 5
+  while f <= r:
+    if n % f == 0:
       return('is a composite number.')
-    else:
-      return('is a prime number.')
+    if n % (f+2) == 0:
+      return('is a composite number.')
+    f += 6
+  return('is a prime number.')
 def SquareorCube(n):
   if abs(n**(1/6)) == int(abs(n**(1/6))):
     return('is a power of 6, so it is both a square number and a cube number.')

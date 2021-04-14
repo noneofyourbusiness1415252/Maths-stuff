@@ -2,12 +2,14 @@
 from Functions import *
 import random
 import os
-squareorcubelevel = 1
-primelevel = 1
 nickname =input('Hello! Enter a nickname to save progress.\nIf you have used this tool before, enter the nickname you used last.\n')
 if not os.path.exists('UserAccounts/'+nickname):
   os.mkdir('UserAccounts/'+nickname)
-start = input('Hello, '+nickname+'. This is a tool to find more about numbers. What do you want to do? Type in a number to go to one of these modes: \nType 1 to find out if a number is prime or composite. \nType 2 to find out how many Prime numbers are between 2 numbers\nType 3 to find out if a number is squared or cubed.\nType 4 to find out how many squares and cubes there are between 2 numbers.\nType 5 for a quiz about primes and composites.\nType 6 for a quiz about squares and cubes.\nPlease go to code, then go to README.md for guidance and information.\nI know about the quizzes not working past level 1  because the level system is broken and I am working on that now\nPlease report any bugs or feedback in the comments below, or on\n https://github.com/noneofyourbusiness1415252/Maths-stuff/issues\n')
+SOCLfile = open('UserAccounts/'+nickname+'/SquareOrCubeLevel.md','a+')
+SOCLfile.close()
+PLfile=open('UserAccounts/'+nickname+'/PrimeLevel.md','a+')
+PLfile.close()
+start = input('Hello, '+nickname+'. This is a tool to find more about numbeers. What do you want to do? Type in a number to go to one of these modes: \nType 1 to find out if a number is prime or composite. \nType 2 to find out how many Prime numbers are between 2 numbers\nType 3 to find out if a number is squared or cubed.\nType 4 to find out how many squares and cubes there are between 2 numbers.\nType 5 for a quiz about primes and composites.\nType 6 for a quiz about squares and cubes.\nPlease go to code, then go to README.md for guidance and information.\n Please report any bugs or feedback in the comments below, or on\n https://github.com/noneofyourbusiness1415252/Maths-stuff/issues\n')
 while start == '1':
 	number = input('Enter a number.')
 	print(number, PrimeorComposite(int(number)))
@@ -67,57 +69,117 @@ while start == '4':
 	SwitchMode()
 while start == '5':
 	score = 0
+	with open('UserAccounts/'+nickname+'/PrimeLevel.md') as PLfile:
+	  readPL = PLfile.read()
+	if readPL =='':
+	  primelevel=1
+	  highestPL=1
+	else:
+	  highestPL=int(readPL)
+	  PLs=list(range(1,int(highestPL)+1))
+	  choosePL=int(input('Type a level from 1 to '+str(highestPL)+'\n'))
+	  while PLs.count(choosePL)==0:
+	    choosePL=int(input('Invalid level, please try again\n'))
+	primelevel=choosePL
 	for a in range(10):
-		if primelevel == 1:
-			rand = random.randint(1, 10)
-		else:
-			rand = random.randint(
-			    primelevel**2 * 10 - (primelevel - 1)**2 * 10,
-			    primelevel**2 * 10)
-		text = 'Is ', str(rand), ' a prime number?\n'
-		answer = input(''.join(text))
-		if PrimeorComposite(rand) == 'is a prime number.':
-			correct = 'yes'
-		else:
-			correct = 'no'
-		if answer.upper()==correct:
-		  score=score+1
-		  print('Well done!')
-		else:
-		  print('Oops! Incorrect answer!')
-	if score > 9:
-		primelevel = primelevel + 1
-		primelevelup = 'Level up! You are now on level ', str(primelevel), '! Good work! You will now get harder questions!'
+	  primes=0
+	  composites=0
+	  randnum=()
+	  while randnum==():
+	    if primelevel == 1:
+		    primeorcomposite=random.randint(1,3)
+		    if primeorcomposite==3:
+			    for l in range(1,10):
+			      if PrimeorComposite(l)=='is a prime number.':
+			        rand=random.randint
+			        if rand==4:
+			          randnum=l
+			      else:
+			        rand=random.randint(1,6)
+			        if rand==6:
+			          randnum=l
+	    else:
+	      for l in range((primelevel-1)**2*10+1,primelevel**2*10):
+	        if PrimeorComposite(l)=='is a prime number.':
+	          primes=primes+1
+	        else:
+	          composites=composites=composites+1
+	      for l in range((primelevel-1)**2*10+1,primelevel**2*10):
+	        if PrimeorComposite(l)=='is a prime number':
+	          rand=random.randint(1,primes)
+	          if rand==primes:
+	            randnum=l
+	        else:
+	          rand=random.randint(1,composites)
+	          if rand==composites:
+	            randnum=l
+	  text = 'Is ', str(randnum), ' a prime number?\n'
+	  answer = input(''.join(text))
+	  if PrimeorComposite(randnum) == 'is a prime number.':
+	    correct = 'yes'
+	  else:
+	    correct = 'no'
+	  if answer.lower()==correct:
+	    score=score+1
+	    print('Well done!')
+	  else:
+	    print('Oops! Correct answer is: '+correct)
+	if score > 9 and primelevel==highestPL:
+		highestPL = highestPL + 1
+		primelevelup = 'Level up! You are now on level ', str(highestPL), '! Good work! You will now get harder questions!'
 		print(''.join(primelevelup))
-		SwitchMode()
+		with open('UserAccounts/'+nickname+'/PrimeLevel.md','w') as PLfile:
+		  PLfile.write(str(highestPL))
+	SwitchMode()
 while start == '6':
-  with open('UserAccounts/'+nickname+'/SquareOrCubeLevel.txt','w+') as SOCL:
-    SOCLR = SOCL.read()
-    if SOCLR =='':
-      squareorcubelevel=1
-    else:
-      squareorcubelevel=int(SOCLR)
-      print(squareorcubelevel)
-  score = 0
-  powers =() 
+  socls=0
+  score=0
   nonpowers=()
-  if squareorcubelevel ==1:
-    randnum = random.randint(1,10)
-    powers = [1,4,8,9]
-    nonpowers = [2,3,5,6,7,10]
-  else:
-    for a in range((squareorcubelevel-1)**2*10+1,squareorcubelevel**2*10):
-       if SquareorCube(a)=='is not a square or cube number.':
-        nonpowers=[nonpowers, l]
-       else:
-        powers=[powers, l]    
-  for a in range(10):
-    powerornonpower=random.randint(1,3)
-    powerornonpower = random.randint(1,3)
-    if powerornonpower==1:
-      randnum = random.choice(powers)
+  powers=()
+  with open('UserAccounts/'+nickname+'/SquareOrCubeLevel.md') as SOCLfile:
+    readSOCL = SOCLfile.read()
+    if readSOCL =='':
+      squareorcubelevel=1
+      highestSOCL=1
     else:
-      randnum=random.choice(nonpowers)
+      highestSOCL=int(readSOCL)
+      SOCLs=list(range(1,int(highestSOCL)+1))
+      chooseSOCL=int(input('Choose a level from 1 to '+str(highestSOCL)+'\n'))
+      while SOCLs.count(chooseSOCL)==0:
+        chooseSOCL=int(input('Invalid level, please try again\n'))
+      squareorcubelevel=chooseSOCL
+  for a in range(10):
+    powers=0
+    nonpowers=0
+    randnum=()
+    while randnum==():
+      if squareorcubelevel == 1:
+        powerornonpower=random.randint(1,3)
+      if powerornonpower==3:
+        for l in range(10):
+          if SquareorCube(l)=='is a prime number.':
+            rand=random.randint(1,4)
+            if rand==4:
+              randnum=l
+          else:
+            rand=random.randint(1,6)
+            if rand==6:
+              randnum=l
+      else:
+        for l in range((squareorcubelevel-1)**2*10+1,squareorcubelevel**2*10):
+	        if SquareorCube(l)=='is not a square or cube number.':
+	          nonpowers=nonpowers+1
+	        else:
+	          powers=powers+1
+        for l in range((squareorcubelevel-1)**2*10+1,squareorcubelevel**2*10):
+	          if SquareorCube(l)=='is not a square or cube number.':
+	            rand=random.randint(1,nonpowers)
+	            if rand==nonpowers:
+	              randnum=l
+	          else:
+	            rand=random.randint(1,powers)
+	            if rand==powers:
+	              randnum=l
     text = 'Is '+ str(randnum)+ " a square number or cube number? Type 'both', 'square', 'cube' or 'no' accordingly. \n"
     answer = input(''.join(text))
     if SquareorCube(randnum) == 'is a power of 6, so it is both a square number and a cube number.':
@@ -133,13 +195,13 @@ while start == '6':
       score=score+1
     else:
       print('Oops! The correct answer is:'+correct+'.')
-  if score > 9:
-    squareorcubelevel = squareorcubelevel +1
-    squarecubelevelup = 'Level up! You are now on level ' + str(squareorcubelevel) + '. Good job!'
-    print(''.join(squarecubelevelup))
-    with open('UserAccounts/'+nickname+'/SquareOrCubeLevel.txt','w+') as SOCL:
-      SOCL.write(str(squareorcubelevel))
-    SwitchMode()
+  if score > 9 and squareorcubelevel==highestSOCL:
+    highestSOCL=highestSOCL+1
+    SOCLup = 'Level up! You are now on level ' + str(highestSOCL) + '. Good job!'
+    print(''.join(SOCLup))
+    with open('UserAccounts/'+nickname+'/SquareOrCubeLevel.md','w') as SOCLfile:
+      SOCLfile.write(str(highestSOCL))
+  SwitchMode()
     
 
 
