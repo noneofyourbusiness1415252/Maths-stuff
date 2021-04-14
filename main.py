@@ -94,7 +94,7 @@ while start == '5':
 			        rand=random.randint
 			        if rand==4:
 			          randnum=l
-			      else:
+			      elif l%2 > 0 or l==2:
 			        rand=random.randint(1,6)
 			        if rand==6:
 			          randnum=l
@@ -109,7 +109,7 @@ while start == '5':
 	          rand=random.randint(1,primes)
 	          if rand==primes:
 	            randnum=l
-	        else:
+	        elif l%2 > 0 or l == 2:
 	          rand=random.randint(1,composites)
 	          if rand==composites:
 	            randnum=l
