@@ -78,7 +78,7 @@ def PrimeQuiz():
       choosePL=int(input('Type a level from 1 to '+str(highestPL)+'\n'))
       while PLs.count(choosePL)==0:
           choosePL=int(input('Invalid level, please try again\n'))
-  primelevel=choosePL
+      primelevel=choosePL
   for a in range(10):
       primes=0
       composites=0
