@@ -1,3 +1,6 @@
+import sys
+from time import sleep
+import random
 def PrimeorComposite(n):
   if n == 2 or n == 3:
     return('is a prime number.')
