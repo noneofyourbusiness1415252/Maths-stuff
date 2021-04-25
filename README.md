@@ -1,11 +1,10 @@
 # Umar's Maths stuff
 ![Maths: the only place where people buy 64 watermelons and no-one knows why...](https://www.bing.com/images/blob?bcid=RLGht7PssYcCsA "the truest meme ever")
-Note: Please do not use this program yet; it is the development version. Use the [stable version](https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1) instead.
 Please report any bugs on [Github](https://github.com/noneofyourbusiness1415252/Maths-stuff/issues)
 Hello there and welcome to my Maths stuff!
-This program currently identifies primes, composites, squares and cubes from within a range of number/s that you specify.   
-To get started, just type a number from 1-4 to choose one of the options.   
-All inputs must be written in integers (whole numbers). For the switching modes option, it allows you to switch modes if you type 'yes' in lowercase, uppercase or a mix, otherwise it continues on the same mode.
+This program currently identifies primes, composites, squares and cubes from within a range of number/s that you specify. It also includes quizzes about primes, squares and cubes.
+To get started, just type a number from 1-7 to choose one of the options.   
+All inputs must be written in integers (whole numbers). For the switching modes option, it allows you to switch modes if you type 'yes' in lowercase, uppercase or a mix, otherwise it continues on the same mode. For the typewriter effect speed, you can write any positive integer
 ## Primes/squares/cubes in range calculator
 When finding squares/cubes/primes/composites in a certain range, the first number you will be asked for will be the **start** of the range, and the second number the **end** of the range, ***including itself***.
 ## Quiz  
@@ -31,24 +30,24 @@ level 500 = 249001-250000
 ### How each individual question is chosen
 1. Primes/squares and cubes respectively are counted within the range of numbers (which depends on level)
 2. Each individual number is checked to see if it is prime/square or cube
-3. The chance of that number getting picked is one divided by the amount of primes/composites or squares+cubes/not square or cube.
+3. The chance of that number getting picked is one divided by the amount of primes/composites or squares+cubes/not-square -or-cube numbers
 #### Example 1
-> Level:2
-Quiz:primes
-Range:10-40
-8 Primes,22 composites between 10-40
-Number currently being checked:17
+> Level: 2
+Quiz: primes
+Range: 10-40
+8 Primes, 22 composites between 10-40
+Number currently being checked: 17
 17 is prime.
-1 divided by 8 primes=12.5% chance of getting 17,or any prime in level 2 range.
+1 divided by 8 primes=12.5% chance of getting 17, or any other prime in level 2 range.
 
 #### Example 2
 > Level:3
 Quiz:squares+cubes
 Range:40-90
 3 squares/cubes,47 other numbers between 10-40
-Number currently being checked:82
-82 is not square or cube.
-1 divided by 47 not square or cube=about 2.13% chance of getting 47, or any other number that isn't square or cube
+Number currently being checked:47
+47 is not square or cube.
+1 divided by 47 non-square-or-cube numbers=about 2.13% chance of getting 47, or any other number that isn't square or cube in level 3 range.
 
 ## Typewriter Effect!
 When choosing typewriter effect, the speed actually increases with a lower number because it is measured in ***average*** **seconds between each letter**.

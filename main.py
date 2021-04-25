@@ -55,9 +55,7 @@ def SquareorCubeRange():
   squarenums = 'The square numbers between ' + str(num1) + ' and ' + str(
           num2) + ' are: '
   for l in range(num1, num2 + 1):
-    if SquareorCube(
-            l
-    ) == 'is a power of 6, so it is both a square number and a cube number.':
+    if SquareorCube(l) == 'is a power of 6, so it is both a square number and a cube number.':
       squares = squares + 1
       cubes = cubes + 1
       squarenums = squarenums + str(l) + ', '
@@ -234,7 +232,7 @@ def typewriter(t):
   for x in t:
     print(x, end='')
     sys.stdout.flush()
-    sleep(random.uniform(0,speed))
+    sleep(random.uniform(0,speed*2))
 nickname =input('Hello! Enter a nickname to save progress.\nIf you have used this tool before, enter the nickname you used last.\n')
 if not os.path.exists('UserAccounts/'+nickname):
     os.mkdir('UserAccounts/'+nickname)
@@ -254,13 +252,13 @@ if TSread=='':
     happy=input()
     while happy.lower()=='no':
       typewriter('Type a number to change speed.\n')
-      speed=input()
+      speed=float(input())
       typewriter('This is how fast the effect will be. Are you happy with your changes?\n')
       happy=input()
   else:
     speed=0
   with open('UserAccounts/'+nickname+'/TypeSpeed.md','w')as typespeed:
-    typespeed.write(str(speed*2))
+    typespeed.write(str(speed))
 else:
   speed=float(TSread)
 global SwitchMode
