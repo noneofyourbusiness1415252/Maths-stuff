@@ -103,12 +103,12 @@ def PrimeQuiz():
                   if PrimeorComposite(l)=='is a prime number.':
                     rand=random.randint(1,4)
                     if rand==4:
-                      chosen=chosen+str(l)
+                      chosen=chosen+str(l)+', '
                       randnum=l
                   elif l%2 > 0 or l==2:
                     rand=random.randint(1,6)
                     if rand==6:
-                      chosen=chosen+str(l)
+                      chosen=chosen+str(l)+', '
                       randnum=l
           else:
             if not chosen.__contains__(l):
@@ -121,12 +121,12 @@ def PrimeQuiz():
                 if PrimeorComposite(l)=='is a prime number':
                   rand=random.randint(1,primes)
                   if rand==primes:
-                    chosen=chosen+str(l)
+                    chosen=chosen+str(l)+', '
                     randnum=l
                 elif l%2 > 0 or l == 2:
                     rand=random.randint(1,composites)
                     if rand==composites:
-                      chosen=chosen+str(l)
+                      chosen=chosen+str(l)+', '
                       randnum=l
       text = 'Is ', str(randnum), ' a prime number?\n'
       typewriter(''.join(text))
@@ -152,7 +152,7 @@ def SquareorCubeQuiz():
     score=0
     nonpowers=()
     powers=()
-    chosen=()
+    chosen=''
     with open('UserAccounts/'+nickname+'/SquareOrCubeLevel.md') as SOCLfile:
         readSOCL = SOCLfile.read()
         if readSOCL =='':
@@ -180,13 +180,13 @@ def SquareorCubeQuiz():
                   if SquareorCube(l)=='is a prime number.':
                     rand=random.randint(1,4)
                     if rand==4:
-                      chosen=chosen,l
+                      chosen=chosen+str(l)+', '
                       randnum=l
                   else:
                     rand=random.randint(1,6)
                     if rand==6:
                       randnum=l
-                      chosen=chosen,l
+                      chosen=chosen+str(l)+', '
             else:
               for l in range((squareorcubelevel-1)**2*10+1,squareorcubelevel**2*10):
                 if SquareorCube(l)=='is not a square or cube number.':
@@ -199,12 +199,12 @@ def SquareorCubeQuiz():
                     rand=random.randint(1,nonpowers)
                     if rand==nonpowers:
                       randnum=l
-                      chosen=chosen,l
+                      chosen=chosen+str(l)+', '
                     else:
                       rand=random.randint(1,powers)
                       if rand==powers:
                         randnum=l
-                        chosen=chosen,l
+                        chosen=chosen+str(l)+', '
         text = 'Is '+ str(randnum)+ " a square number or cube number? Type 'both', 'square', 'cube' or 'no' accordingly. \n"
         typewriter(text)
         answer = input()
@@ -271,7 +271,7 @@ def SwitchMode():
     typewriter('Do you want to switch modes?\n')
     switch=input()
     if switch.upper()=='YES':
-      typewriter('What do you want to do? Type in a number to go to one of these modes: \nType 1 to find out if a number is prime or composite. \nType 2 to find out how many Prime numbers are between 2 numbers\nType 3 to find out if a number is squared or cubed.\nType 4 to find out how many squares and cubes there are between 2 numbers.\nType 5 for a quiz about primes and composites.\nType 6 for a quiz about squares and cubes.\n')
+      typewriter('What do you want to do? Type in a number to go to one of these modes: \nType 1 to find out if a number is prime or composite. \nType 2 to find out how many Prime numbers are between 2 numbers\nType 3 to find out if a number is squared or cubed.\nType 4 to find out how many squares and cubes there are between 2 numbers.\nType 5 for a quiz about primes and composites.\nType 6 for a quiz about squares and cubes.\nType 7 to change typewriter effect speed!\n')
       start=input()
   if start=='1':
     PrimeorCompositeNumber()
@@ -286,7 +286,7 @@ def SwitchMode():
   elif start=='6':
     SquareorCubeQuiz()
   elif start=='7':
-    typewriter('Do you want to turn on typewriter effects?')
+    typewriter('Do you want to turn on typewriter effects?\n')
     write=input()
     if write.lower()=='yes':
       typewriter('Type a number to change speed of typewriter effect.\nNote that a lower amount means a higher speed, because it is measured  in average seconds delay between each letter.\n')

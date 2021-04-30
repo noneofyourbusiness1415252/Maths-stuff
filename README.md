@@ -1,6 +1,8 @@
 # Umar's Maths stuff
 ![Maths: the only place where people buy 64 watermelons and no-one knows why...](https://www.bing.com/images/blob?bcid=RLGht7PssYcCsA "the truest meme ever")
-Please report any bugs on [Github](https://github.com/noneofyourbusiness1415252/Maths-stuff/issues)
+Please report any bugs on [Github](https://github.com/noneofyourbusiness1415252/Maths-stuff/issues) 
+[Demonstration video](https://www.loom.com/share/e7a3212ec2af446c81699a7f9109135f)
+[Typewriter Effect](https://www.loom.com/share/1096805bfb5d4819be558462933c6a5c)
 Hello there and welcome to my Maths stuff!
 This program currently identifies primes, composites, squares and cubes from within a range of number/s that you specify. It also includes quizzes about primes, squares and cubes.
 To get started, just type a number from 1-7 to choose one of the options.   
@@ -53,8 +55,10 @@ Number currently being checked:47
 When choosing typewriter effect, the speed actually increases with a lower number because it is measured in ***average*** **seconds between each letter**.
 So if you type in 0.1, 0.1 is multiplied by 2 to make 0.2, and the delay between each letter is a random number between 0 and 0.2 seconds. So it averages out to 0.1 seconds. 
 The reason I made it like this instead of a fixed delay is so that it feels more natural, because you never type each letter with the exact same speed.
+# What I'm currently working on
+I'm working on adding a discord bot with this program, as my friend Ammaar suggested.
 
 Hope you like this tool! Have a good day!
 
-To use this tool on replit, click [here](https://replit.com/@idkwhatnamelol/Umars-maths-stuff?v=1)  
+  
 
