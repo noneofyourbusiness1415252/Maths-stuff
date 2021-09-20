@@ -4,6 +4,7 @@ start = ""
 from Functions import *
 from random import randint, uniform, choice
 import os
+from sys import stdout, float_info
 
 global PrimeorCompositeNumber
 global PrimeorCompositeRange
@@ -26,14 +27,42 @@ def print_linenum(signum, frame):
 
 signal.signal(signal.SIGINT, print_linenum)
 from time import sleep
-import sys
-from spellchecker import SpellChecker
+
+
+def typewriter(t):
+	try:
+		speed = db[f"{owner}.typespeed"]
+	except:
+		speed = float_info.min
+	try:
+		colours = db[f'{owner}.colours']
+	except:
+		colours = ['white']
+	for x in t:
+		if len(colours) == 1:
+			rc = 0
+		else:
+			rc = randint(1,len(colours)-1)
+		cprint(x, colours[rc], end="")
+		stdout.flush()
+		sleep(uniform(0, speed * 2))
+
+
+try:
+	from spellchecker import SpellChecker
+except:
+	os.system("pip install pyspellchecker")
+	from spellchecker import SpellChecker
 spell = SpellChecker()
+
 
 def PrimeorCompositeNumber():
 	typewriter("Enter a number.\n")
 	number = int(input())
-	typewriter(str(number) + PrimeorComposite(int(number)))
+	if Prime(number):
+		typewriter(f"{number} is prime.\n")
+	else:
+		typewriter(f"{number} is composite.\n")
 	SwitchMode()
 
 
@@ -69,24 +98,11 @@ def SquareorCubeNumber():
 
 
 def PowerandPrimeRange(primeorpower):
+	amount = 0
 	if primeorpower == Prime:
-		a = "is a composite number."
-		correct_a = "no"
-		c = a
-		correct_c = correct_a
-		b = "is a prime number."
-		prompt = 'Is __ a prime number? Type "yes" or "no".'
+		a = True
 	else:
-		a = "is a square number."
-		correct_a = "square"
-		b = "is a cube number."
-		correct_b = "cube"
-		c = "is not a square or cube number."
-		correct_c = "neither"
-		prompt = (
-			'Is __ a square number, a cube number or both? Type "square", "cube",'
-			' "both" or "neither" accordingly.'
-		)
+		a = "both"
 	typewriter("Enter the first number\n")
 	num1 = int(input())
 	typewriter("Enter the second number.\n")
@@ -100,40 +116,35 @@ def PowerandPrimeRange(primeorpower):
 		"The square numbers between " + str(num1) + " and " + str(num2) + " are: "
 	)
 	for l in range(num1, num2 + 1):
-		if (
-			primeorpower(l)
-			== "is a power of 6, so it is both a square number and a cube number."
-		):
+		if primeorpower(l) == a:
 			squares += 1
 			squarenums = squarenums + str(l) + ", "
 			cubeorprimenums = cubeorprimenums + str(l) + ", "
+			amount += 1
 	if primeorpower == SquareorCube:
 		for l in range(num1, num2 + 1):
-			if primeorpower(l) == "is a cube number.":
+			if primeorpower(l) == "cube":
 				cubesorprimes += 1
 				cubeorprimenums = cubeorprimenums + str(l) + ", "
 		for l in range(num1, num2 + 1):
-			if primeorpower(l) == "is a square number.":
+			if primeorpower(l) == "square":
 				squares = squares + 1
 				squarenums = squarenums + str(l) + ", "
 	str1 = str(num1)
 	str2 = str(num2)
-	if primeorpower == PrimeorComposite:
+	if primeorpower == Prime:
 		if amount == 1:
-			typewriter(f"There is 1 prime number between {str1}, and {str2}")
+			typewriter(f"There is 1 prime number between {str1}, and {str2}.\n")
 		else:
-			typewriter(
-				"there are" + amount, "prime numbers between" + num1, "and", num2
-			)
+			typewriter(f"There are {amount} prime numbers between {str1} and {str2}.\n")
 		typewriter(
-			f"These are the prime numbers between {str1} and {str2}: {cubeorprimenums}"
+			f"These are the prime numbers between {str1} and {str2}:"
+			f" {cubeorprimenums}.\n"
 		)
 	else:
 		typewriter(
 			f"There are {str(cubesorprimes)} cube numbers, and {str(squares)} square"
-			f" numbers between {str1}  and {str2}.\nThese are the square numbers"
-			f" between {str1} and {str2}: {squarenums}.\nThese are the cube numbers"
-			f" between {str1} and {str2}: {cubeorprimenums}."
+			f" numbers between {str1}  and {str2}.\n{squarenums}.\n{cubeorprimenums}."
 		)
 
 	SwitchMode()
@@ -142,7 +153,7 @@ def PowerandPrimeRange(primeorpower):
 def Quiz(primeorpower):
 	if primeorpower == Prime:
 		a = False
-		correct_a = 'no'
+		correct_a = "no"
 		b = True
 		c = a
 		correct_b = "yes"
@@ -221,8 +232,6 @@ except:
 	if nickname == "":
 		nickname = owner
 	db[f"{owner}.nickname"] = nickname
-if not os.path.exists("UserAccounts/" + nickname):
-	os.mkdir("UserAccounts/" + nickname)
 try:
 	speed = db[f"{owner}.typespeed"]
 except:
@@ -245,21 +254,35 @@ except:
 			typewriter("Type a number to change speed.\n")
 			speed = float(input())
 			typewriter(
-				"This is how fast the effect will be. Are you happy with your"
-				" changes?\n"
+				"This is how fast the effect will be. Are you happy with you changes?"
 			)
+	try:
+		speed = db[f"{owner}.typespeed"]
+	except:
+		speed = float_info.min
+		db[f"{owner}.typespeed"] = speed
+try:
+	colours = db[f'{owner}.colours']
+except:
+	typewriter('Do you want to turn on coloured text?')
+	coloured = input()
+	happy = 'no'
+	if coloured.lower() == 'yes' or coloured.lower() == 'y':
+		while spell.correction(happy) != 'yes' and happy != 'y':
+			colours = []
+			while not 'done' in colours and not 'all' in colours:
+				typewriter('Enter any colour to add. Choose from: grey, red, green, yellow, blue, magenta, cyan or white. Type "all" to use all available colours. Type "done" when finished to preview your configuration.')
+				c = input()
+				colours.append(c)
+			
+			db[f'{owner}.colours'] = colours
+			typewriter('This is a preview of your configuration. Are you happy with your changes?')
 			happy = input()
+			if 'all' in colours:
+				db[f'{owner}.colours'] = ['grey','red','green','yellow','blue','magenta','cyan','white']
 	else:
-		speed = 0
-	db[f"{owner}.typespeed"] = speed
-
-
-def typewriter(t):
-	for x in t:
-		cprint(x, end="")
-		sys.stdout.flush()
-		sleep(uniform(0, db[f"{owner}.typespeed"] * 2))
-
+		db[f'{owner}.colours'] = 'white'
+	
 
 def SwitchMode():
 	global start
@@ -270,8 +293,8 @@ def SwitchMode():
 			+ ". This is a tool to find more about numbers. What do you want to do?"
 			" Type in a number to go to one of these modes: \nType 1 to find out if a"
 			" number is prime or composite. \nType 2 to find out how many Prime numbers"
-			" are between 2 numbers\nType 3 to find out if a X is a Yth power, i.e. if"
-			" a number is squared, cubed, tesseractic etc.\nType 4 to find out how many"
+			" are between 2 numbers\nType 3 to find out if X is a Yth power, i.e. if a"
+			" number is squared, cubed, tesseractic etc.\nType 4 to find out how many"
 			" squares and cubes there are between 2 numbers.\nType 5 for a quiz about"
 			" primes and composites.\nType 6 for a quiz about squares and cubes.\nType"
 			" 7 to turn on/change typewriter effect!\nPlease click code, or"
@@ -289,22 +312,23 @@ def SwitchMode():
 				"What do you want to do? Type in a number to go to one of these modes:"
 				" \nType 1 to find out if a number is prime or composite. \nType 2 to"
 				" find out how many Prime numbers are between 2 numbers\nType 3 to find"
-				" out if a number is squared or cubed.\nType 4 to find out how many"
-				" squares and cubes there are between 2 numbers.\nType 5 for a quiz"
-				" about primes and composites.\nType 6 for a quiz about squares and"
-				" cubes.\nType 7 to change typewriter effect speed!\n"
+				" out if X is a Yth power, i.e. if a number is squared, cubed,"
+				" tesseractic etc\nType 4 to find out how many squares and cubes there"
+				" are between 2 numbers.\nType 5 for a quiz about primes and"
+				" composites.\nType 6 for a quiz about squares and cubes.\nType 7 to"
+				" change typewriter effect speed!\n"
 			)
 			start = input()
 	if start == "1":
 		PrimeorCompositeNumber()
 	elif start == "2":
-		PowerandPrimeRange(PrimeorComposite)
+		PowerandPrimeRange(Prime)
 	elif start == "3":
 		SquareorCubeNumber()
 	elif start == "4":
 		PowerandPrimeRange(SquareorCube)
 	elif start == "5":
-		Quiz(PrimeorComposite)
+		Quiz(Prime)
 	elif start == "6":
 		Quiz(SquareorCube)
 	elif start == "7":
@@ -317,24 +341,6 @@ def SwitchMode():
 				" seconds delay between each letter.\n"
 			)
 			speed = float(input())
-			print("Enter a colour for your effect. Choose from: ")
-			cprint("Red", "red")
-			cprint("Grey", "grey")
-			cprint("Green", "green")
-			cprint("Yellow", "yellow")
-			cprint("Blue", "blue")
-			cprint("Magenta", "magenta")
-			cprint("Cyan", "cyan")
-			cprint("White", "white")
-			cprint("C", "grey", end="")
-			cprint("o", "red", end="")
-			cprint("l", "green", end="")
-			cprint("o", "yellow", end="")
-			cprint("r ", "blue", end="")
-			cprint("f", "magenta", end="")
-			cprint("u", "cyan", end="")
-			cprint("l", "white", end="")
-			colour = input()
 			typewriter(
 				"This is how fast the effect will be. Are you happy with your"
 				" changes?\n"

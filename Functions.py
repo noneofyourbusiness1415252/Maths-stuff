@@ -34,11 +34,3 @@ def SquareorCube(n):
 		return "cube"
 	else:
 		return "neither"
-
-
-def typewriter(t):
-	speed = input("Enter the speed of typewriter effect in average seconds per letter.")
-	for x in t:
-		print(x, end="")
-		sys.stdout.flush()
-		sleep(uniform(0, speed * 2))
