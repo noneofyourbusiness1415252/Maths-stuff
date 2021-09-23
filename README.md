@@ -1,8 +1,11 @@
 # Umar's Maths stuff
-![Maths: the only place where people buy 64 watermelons and no-one knows why...](https://www.bing.com/images/blob?bcid=RLGht7PssYcCsA "the truest meme ever")
-Please report any bugs on [Github](https://github.com/noneofyourbusiness1415252/Maths-stuff/issues) 
-[Demonstration video](https://www.loom.com/share/e7a3212ec2af446c81699a7f9109135f)
-[Typewriter Effect](https://www.loom.com/share/1096805bfb5d4819be558462933c6a5c)
+Please report any bugs on [Github] 
+(https://github.com/noneofyourbusiness1415252/Maths-stuff/issues) 
+
+[Demonstration video] (https://www.loom.com/share/e7a3212ec2af446c81699a7f9109135f)
+
+[Typewriter Effect] (https://www.loom.com/share/1096805bfb5d4819be558462933c6a5c)
+
 Hello there and welcome to my Maths stuff!
 This program currently identifies primes, composites, squares and cubes from within a range of number/s that you specify. It also includes quizzes about primes, squares and cubes.
 To get started, just type a number from 1-7 to choose one of the options.   
@@ -10,51 +13,61 @@ All inputs must be written in integers (whole numbers). For the switching modes 
 ## Primes/squares/cubes in range calculator
 When finding squares/cubes/primes/composites in a certain range, the first number you will be asked for will be the **start** of the range, and the second number the **end** of the range, ***including itself***.
 ## Quiz  
-For the square/cube quiz, type *square* if you think it is square, *cube* if you think it is cube, *both* if you think it is both square and cube, and *no* if you think it is neither square nor cube.
+For the square/cube quiz, type *square* if you think it is square, *cube* if you think it is cube, *both* if you think it is both square and cube, and *neither* if you think it is neither square nor cube.
 ## How questions are picked
-The numbers picked quadratically increase depending on the level. There are theoretically infinite levels, but when the level gets really high the game becomes slower. If you really want to cheat your way to high levels, fork this program, click UserAccounts, then click your nickname, then click PrimeLevel or SquareOrCubeLevel depending on what you want to change, then change the number to what you want. *I won't be changing anyone's levels here!* ((-:)
+The numbers picked quadratically increase depending on the level. There are theoretically infinite levels, but when the level gets really high the game becomes slower. *I won't be changing anyone's levels here!* ((-:)
 ### How the range of numbers is chosen
 The formula to choose a number in each level is:
-> maximum = level squared times ten
-> minimum = maximum of previous level. 
+> `minimum = level ** 2 * 5 # level squared times five`
 
-There is an exception for level 1, because the formula above wouldn't work, so it is set manually to 1-10. Example question ranges include:
-> level 1 = 1-10
-level 2 = 10-40
-level 5 = 160-250
-level 10 = 810-1000
-level 20 = 3610-4000
-level 50 = 2401-2500
-level 100 = 9801-10000
-level 200 = 39601-40000
-level 500 = 249001-250000
+> `maximum = (level + 1) ** 2 * 5 # (level plus one) squared times five`
 
+Examples:  
+level 1 = 5 to 20  
+level 2 = 20 to 45  
+level 5 = 125 to 180  
+level 10 = 500 to 605  
+level 15 = 1125 to 1280  
+level 20 = 2000 to 2205  
+Woah, that escalated quickly, right?
 ### How each individual question is chosen
-1. Primes/squares and cubes respectively are counted within the range of numbers (which depends on level)
-2. Each individual number is checked to see if it is prime/square or cube
-3. The chance of that number getting picked is one divided by the amount of primes/composites or squares+cubes/not-square -or-cube numbers
+1. The range of numbers in the level are split equally into 5 groups.
+2. If there are squares/cubes (if in square or cube quiz) or primes (if in prime quiz) in the first group, one of them is chosen at random.
+3. Otherwise, any random number is chosen.
+4. Step 2 or 3 repeated for the second, third, fourth and fifth group for the respective question
 #### Example 1
-> Level: 2
-Quiz: primes
-Range: 10-40
-8 Primes, 22 composites between 10-40
-Number currently being checked: 17
-17 is prime.
-1 divided by 8 primes=12.5% chance of getting 17, or any other prime in level 2 range.
-
+Level: 5  
+Range: 125 to 180  
+Questions per group: 11  
+Question groups are:  
+1. 125 to 135  
+2. 136 to 146  
+3. 147 to 157  
+4. 158 to 168  
+5. 169 to 179  
+Question 1 will be 125, because it is the only square/**cube** number in group 1.  
+Question 2 will be 144, because it is the only **square**/cube number in group 2.  
+Question 3 will be a random number from 147 to 157, because there are no squares or cubes in group 3.  
+Question 4 will be any number from 158 to 168, for the same reason as question 3.   
+Question 5 will be 169, for the same reason as question 2. 
 #### Example 2
-> Level:3
-Quiz:squares+cubes
-Range:40-90
-3 squares/cubes,47 other numbers between 10-40
-Number currently being checked:47
-47 is not square or cube.
-1 divided by 47 non-square-or-cube numbers=about 2.13% chance of getting 47, or any other number that isn't square or cube in level 3 range.
+Level: 1  
+Range: 5 to 20  
+Questions per group: 3  
+Question 1: 5, 6 or 7  
+Question 2: 8 or 9, because they are both square or cube, but 10 isn't.  
+Question 3: 10, 11 or 12  
+Question 4: 13, 14 or 15  
+Question 5: 16
 
 ## Typewriter Effect!
 When choosing typewriter effect, the speed actually increases with a lower number because it is measured in ***average*** **seconds between each letter**.
 So if you type in 0.1, 0.1 is multiplied by 2 to make 0.2, and the delay between each letter is a random number between 0 and 0.2 seconds. So it averages out to 0.1 seconds. 
-The reason I made it like this instead of a fixed delay is so that it feels more natural, because you never type each letter with the exact same speed.
+The reason I made it like this instead of a fixed delay is so that it feels more natural, because you never type each letter with the exact same speed
+## (Multi)Coloured text  
+When you first use the program, you are asked if you want to turn on multicoloured text. Then it asks you to pick which colours you want in the text. The more times you type a colour, the more times it appears compared to the other colours. 
+Example:
+Cyan typed twice, red typed once, magenta typed thrice. Result: 1/2 of the text is magenta, 1/3 is cyan, 1/6 is red. 
 # What I'm currently working on
 I'm working on adding a discord bot with this program, as my friend Ammaar suggested.
 
