@@ -1,10 +1,10 @@
+#!/usr/bin/env python
 # Click 'Markdown' for guidance and information.
 global SwitchMode
 start = ""
-from Functions import *
 from random import randint, uniform, choice, randrange
 import os
-from sys import stdout, float_info, getsizeof
+from sys import stdout, float_info
 
 global PrimeorCompositeNumber
 global PrimeorCompositeRange
@@ -14,8 +14,8 @@ global Quiz
 global typewriter
 global chooseTP
 global colours
+global original_start
 import signal
-from math import *
 
 global score
 from termcolor import cprint
@@ -30,7 +30,46 @@ signal.signal(signal.SIGINT, print_linenum)
 from time import sleep
 
 
-def typewriter(t):
+def Prime(n):
+	"""Returns whether or not n is prime. Example:\n `Prime(5)` returns `True`"""
+	if n == 2 or n == 3:
+		return True
+	if n < 2 or n % 2 == 0:
+		return False
+	if n < 9:
+		return True
+	if n % 3 == 0:
+		return False
+	r = int(n ** 0.5)
+	f = 5
+	while f <= r:
+		if n % f == 0:
+			return False
+		if n % (f + 2) == 0:
+			return False
+		f += 6
+	return True
+
+
+def Power(n, p):
+	"""Returns whether or not n is is pth power. Example: `Power(8,3)` returns `True`"""
+	return n ** (1 / p) == int(n ** (1 / p))
+
+
+def SquareorCube(n):
+	"""Returns whether or not a number is square or cube, or both. Example: SquareorCube(64) returns `both`."""
+	if Power(n, 2) and Power(n, 3):
+		return "both"
+	elif Power(n, 2):
+		return "square"
+	elif Power(n, 3):
+		return "cube"
+	else:
+		return "neither"
+
+
+def typewriter(t=""):
+	"""Prints text as if typed on a typewriter, with options for colours and speed. Example: `typewriter('Some strong stringy strings')`"""
 	try:
 		speed = db[f"{owner}.typespeed"]
 	except:
@@ -50,6 +89,7 @@ def typewriter(t):
 
 
 def intput(text):
+	"""Allows to accept integer input without worrying about the user typing something that is not an integer, which would return an error. Used just like input(). Example:\n `intput('Enter an integer.')`. Note that this depends on the `typewriter()` function."""
 	typewriter(text)
 	while True:
 		try:
@@ -69,6 +109,7 @@ spell = SpellChecker()
 
 
 def PrimeorCompositeNumber():
+	"""Asks the user to input a number, and tells them whether or not it is prime."""
 	number = intput("Enter a number: ")
 	if Prime(number):
 		typewriter(f"{number} is prime.\n")
@@ -78,6 +119,7 @@ def PrimeorCompositeNumber():
 
 
 def SquareorCubeNumber():
+	"""Asks user to input 2 numbers, m and n, then informs the user whether or not m is an nth power."""
 	number = intput(
 		"Enter a number to find whether it is square, cube, tesseractic etc.: "
 	)
@@ -109,6 +151,7 @@ def SquareorCubeNumber():
 
 
 def PowerandPrimeRange(primeorpower):
+	"""Asks the user to input x and y, then returns the amount and list of primes/powers between x and y."""
 	amount = 0
 	if primeorpower == Prime:
 		a = True
@@ -161,6 +204,7 @@ def PowerandPrimeRange(primeorpower):
 
 
 def Quiz(primeorpower):
+	"""A quiz that tests the user on their primes, squares and cubes using randomly generated questions with infinite levels. https://github.com/noneofyourbusiness1415252/Maths-stuff#how-questions-are-picked"""
 	if primeorpower == Prime:
 		a = False
 		correct_a = "no"
@@ -192,7 +236,6 @@ def Quiz(primeorpower):
 	minimum = level ** 2 * 5
 	possible_questions = (level + 1) ** 2 * 5 - minimum
 	range_amount = possible_questions / 5
-	total_powers = None
 	i = 0
 	while i < 5:
 		powers = False
@@ -229,45 +272,8 @@ def Quiz(primeorpower):
 	SwitchMode()
 
 
-owner = os.environ["REPL_OWNER"]
-try:
-	nickname = db[f"{owner}.nickname"]
-except:
-	nickname = input(
-		"Optional: Enter a nickname.\nLeave blank to keep your replit username"
-		f" ({owner}) as your nickname\nnickname> "
-	)
-	if nickname == "":
-		nickname = owner
-	if owner == "five-nine":
-		nickname = input(
-			"Enter a nickname to save progress. If you have already used this before,"
-			" use your previous nickname: "
-		)
-		while len(nickname) > 32:
-			typewriter(
-				"Nickname too long! Must be between 8 and 32 characters, and consist of"
-				" only ASCII (English letters, numbers and symbols. : "
-			)
-			nickname = input()
-		try:
-			password = db[f"{nickname}.password"]
-		except:
-			password = input(
-				"Enter a password. Sign into replit to prevent having to type a"
-				" nickname and password here."
-			)
-			while 8 < len(password) < 32 or not password.isascii():
-				typewriter(
-					"Password invalid. It must be between 8 and 32 characters, and only"
-					" contain English symbols, letters and numbers."
-				)
-				password = input()
-		db[f"{nickname}.password"] = password
-	db[f"{owner}.nickname"] = nickname
-try:
-	speed = db[f"{owner}.typespeed"]
-except:
+def typewriterSet():
+	"""Tool to change speed of typewriter effects."""
 	write = input("Do you want to turn on typewriter effects?")
 	if write.lower() == "yes":
 		speed = float(
@@ -294,9 +300,10 @@ except:
 	except:
 		speed = float_info.min
 		db[f"{owner}.typespeed"] = speed
-try:
-	colours = db[f"{owner}.colours"]
-except:
+
+
+def ColourSet():
+	"""Tool to configure the (multi)coloured text"""
 	typewriter("Do you want to turn on (multi)coloured text?")
 	coloured = input()
 	happy = "no"
@@ -335,39 +342,58 @@ except:
 		db[f"{owner}.colours"] = "white"
 
 
-def SwitchMode():
-	global start
-	if start == "":
+owner = os.environ["REPL_OWNER"]
+try:
+	nickname = db[f"{owner}.nickname"]
+except:
+	nickname = input(
+		"Optional: Enter a nickname.\nLeave blank to keep your replit username"
+		f" ({owner}) as your nickname\nnickname> "
+	)
+	if owner == "five-nine":
 		typewriter(
-			f"Hello, {nickname}! This is a tool to find more about numbers. What do you"
-			" want to do? Type in a number to go to one of these modes: \nType 1 to"
-			" find out if a number is prime or composite. \nType 2 to find out how"
-			" many Prime numbers are between 2 numbers\nType 3 to find out if X is a"
-			" Yth power, i.e. if a number is squared, cubed, tesseractic etc.\nType 4"
-			" to find out how many squares and cubes there are between 2"
-			" numbers.\nType 5 for a quiz about primes and composites.\nType 6 for a"
-			" quiz about squares and cubes.\nType 7 to turn on/change typewriter"
-			" effect!\nPlease click code, or"
-			" visit\nhttps://github.com/noneofyourbusiness1415252/Maths-stuff#readme\nfor"
-			" more information.\nPlease report any bugs or feedback in the comments"
-			" below, or"
-			" on\nhttps://github.com/noneofyourbusiness1415252/Maths-stuff/issues\n"
+			f"Please sign in to repl.it before using this program. Exiting...{exit(59)}"
 		)
+	if nickname == "":
+		nickname = owner
+try:
+	speed = db[f"{owner}.typespeed"]
+except:
+	typewriterSet()
+try:
+	colours = db[f"{owner}.colours"]
+except:
+	ColourSet()
+
+start = (
+	f"Hello, {nickname}! This is a tool to find more about numbers. What do you"
+	" want to do? Type in a number to go to one of these modes: \nType 1 to"
+	" find out if a number is prime or composite. \nType 2 to find out how"
+	" many Prime numbers are between 2 numbers\nType 3 to find out if X is a"
+	" Yth power, i.e. if a number is squared, cubed, tesseractic etc.\nType 4"
+	" to find out how many squares and cubes there are between 2"
+	" numbers.\nType 5 for a quiz about primes and composites.\nType 6 for a"
+	" quiz about squares and cubes.\nType 7 to turn on/change typewriter"
+	" effect.\nType 8 to turn on/change colored text.\nPlease click code, or"
+	" visit\nhttps://github.com/noneofyourbusiness1415252/Maths-stuff#readme\nfor"
+	" more information.\nPlease report any bugs or feedback in the comments"
+	" below, or"
+	" on\nhttps://github.com/noneofyourbusiness1415252/Maths-stuff/issues\n"
+)
+original_start = start
+
+
+def SwitchMode():
+	"""Used to switch modes in the maths stuff program."""
+	global start
+	if start == original_start:
+		typewriter(start)
 		start = input()
 	else:
 		typewriter("Do you want to switch modes?\n")
 		switch = input()
 		if switch.upper() == "YES":
-			typewriter(
-				"What do you want to do? Type in a number to go to one of these modes:"
-				" \nType 1 to find out if a number is prime or composite. \nType 2 to"
-				" find out how many Prime numbers are between 2 numbers\nType 3 to find"
-				" out if X is a Yth power, i.e. if a number is squared, cubed,"
-				" tesseractic etc\nType 4 to find out how many squares and cubes there"
-				" are between 2 numbers.\nType 5 for a quiz about primes and"
-				" composites.\nType 6 for a quiz about squares and cubes.\nType 7 to"
-				" change typewriter effect speed!\n"
-			)
+			typewriter(original_start)
 			start = input()
 	if start == "1":
 		PrimeorCompositeNumber()
@@ -382,31 +408,9 @@ def SwitchMode():
 	elif start == "6":
 		Quiz(SquareorCube)
 	elif start == "7":
-		typewriter("Do you want to turn on typewriter effects?\n")
-		write = input()
-		if write.lower() == "yes":
-			typewriter(
-				"Type a number to change speed of typewriter effect.\nNote that a lower"
-				" amount means a higher speed, because it is measured in average"
-				" seconds delay between each letter.\n"
-			)
-			speed = float(input())
-			typewriter(
-				"This is how fast the effect will be. Are you happy with your"
-				" changes?\n"
-			)
-			happy = input()
-			while happy.lower() != "yes":
-				db[f"{owner}.typespeed"] = float(
-					input("Type a number to change speed.\n")
-				)
-				typewriter(
-					"This is how fast the effect will be. Are you happy with your"
-					" changes?\n"
-				)
-				print(speed)
-				happy = input()
-		SwitchMode()
+		typewriterSet()
+	elif start == "8":
+		ColourSet()
 	else:
 		start = input(
 			"Invalid option. Please type a number from 1 to 7 to choose a mode.\n"

@@ -1,3 +1,2 @@
-language = 'python3'
-run = 'black *.py 2> /dev/null;clear;python main.py'
-onBoot = 'python loading.py'
+language = "python3"
+run = "black *y >/dev/null;clear;./*y"
