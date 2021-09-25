@@ -1,8 +1,7 @@
 # Umar's Maths stuff
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)  
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
-Please report any bugs on [Github] 
-(https://github.com/noneofyourbusiness1415252/Maths-stuff/issues) 
+Please report any bugs on [Github] (https://github.com/noneofyourbusiness1415252/Maths-stuff/issues) 
 
 [Demonstration video] (https://www.loom.com/share/e7a3212ec2af446c81699a7f9109135f)
 
@@ -67,9 +66,10 @@ When choosing typewriter effect, the speed actually increases with a lower numbe
 So if you type in 0.1, 0.1 is multiplied by 2 to make 0.2, and the delay between each letter is a random number between 0 and 0.2 seconds. So it averages out to 0.1 seconds. 
 The reason I made it like this instead of a fixed delay is so that it feels more natural, because you never type each letter with the exact same speed
 ## (Multi)Coloured text  
-When you first use the program, you are asked if you want to turn on multicoloured text. Then it asks you to pick which colours you want in the text. The more times you type a colour, the more times it appears compared to the other colours. 
-Example:
-Cyan typed twice, red typed once, magenta typed thrice. Result: 1/2 of the text is magenta, 1/3 is cyan, 1/6 is red. 
+When you first use the program, you are asked if you want to turn on multicoloured text. Then it asks you to pick which colours you want in the text. The more times you type a colour, the more times it appears compared to the other colours.  
+Example:  
+Cyan typed twice, red typed once, magenta typed thrice.  
+Result: 1/2 of the text is magenta, 1/3 is cyan, 1/6 is red. 
 # What I'm currently working on
 I'm working on adding a discord bot with this program, as my friend Ammaar suggested.
 
