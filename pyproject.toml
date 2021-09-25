@@ -11,6 +11,7 @@ pyspellchecker = "^0.6.2"
 termcolor2 = "^0.0.3"
 black-with-tabs = "^19.10b3"
 mypy-extensions = "^0.4.3"
+Flask = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 

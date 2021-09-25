@@ -23,11 +23,15 @@ from replit import db
 
 
 def print_linenum(signum, frame):
+	"""Press Ctrl+C at any time to print the current line"""
 	print("\nCurrently at line", frame.f_lineno)
 
 
 signal.signal(signal.SIGINT, print_linenum)
 from time import sleep
+
+with open("test", "a+") as t:
+	t.write(f"{list(range(2 ** 15 - 1))}")
 
 
 def Prime(n):
@@ -295,6 +299,7 @@ def typewriterSet():
 			typewriter(
 				"This is how fast the effect will be. Are you happy with you changes?"
 			)
+
 	try:
 		speed = db[f"{owner}.typespeed"]
 	except:
