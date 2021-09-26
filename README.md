@@ -1,7 +1,7 @@
 # Umar's Maths stuff
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)  
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
-Please report any bugs on [Github] (https://github.com/noneofyourbusiness1415252/Maths-stuff/issues) 
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)  
+Please report any bugs on [Github] (https://github.com/noneofyourbusiness1415252/Maths-stuff/issues)  
 
 [Demonstration video] (https://www.loom.com/share/e7a3212ec2af446c81699a7f9109135f)
 

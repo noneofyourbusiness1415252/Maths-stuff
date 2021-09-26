@@ -56,8 +56,13 @@ def Prime(n):
 
 
 def Power(n, p):
-	"""Returns whether or not n is is pth power. Example: `Power(8,3)` returns `True`"""
-	return n ** (1 / p) == int(n ** (1 / p))
+	"""Returns whether or not n is a pth power. Example: `Power(8,3)` returns `True`"""
+	if p % 2 == 1:
+		p = abs(p)
+	else:
+		if abs(n) != n:
+			return False
+	return round(abs(n) ** (1 / p)) ** p == abs(n)
 
 
 def SquareorCube(n):
@@ -175,18 +180,18 @@ def PowerandPrimeRange(primeorpower):
 		if primeorpower(l) == a:
 			squares += 1
 			squarenums = squarenums + str(l) + ", "
-			cubeorprimenums = cubeorprimenums + str(l) + ", "
+			cubeorprimenums += str(l) + ", "
 			cubesorprimes += 1
 			amount += 1
 	if primeorpower == SquareorCube:
 		for l in range(num1, num2 + 1):
 			if primeorpower(l) == "cube":
 				cubesorprimes += 1
-				cubeorprimenums = cubeorprimenums + str(l) + ", "
+				cubeorprimenums += str(l) + ", "
 		for l in range(num1, num2 + 1):
 			if primeorpower(l) == "square":
 				squares = squares + 1
-				squarenums = squarenums + str(l) + ", "
+				squarenums += str(l) + ", "
 	str1 = str(num1)
 	str2 = str(num2)
 	if primeorpower == Prime:
@@ -194,10 +199,7 @@ def PowerandPrimeRange(primeorpower):
 			typewriter(f"There is 1 prime number between {str1}, and {str2}.\n")
 		else:
 			typewriter(f"There are {amount} prime numbers between {str1} and {str2}.\n")
-		typewriter(
-			f"These are the prime numbers between {str1} and {str2}:"
-			f" {cubeorprimenums}.\n"
-		)
+		typewriter(f"{cubeorprimenums.replace('cube','prime')}\n")
 	else:
 		typewriter(
 			f"There are {str(cubesorprimes)} cube numbers, and {str(squares)} square"
