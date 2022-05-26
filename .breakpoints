@@ -4,16 +4,8 @@
       {
         "id": "4712edff-76b2-4d04-83d7-b4e1c9b71a10",
         "line": 2,
-        "version": 320,
+        "version": 322,
         "index": 21
-      }
-    ],
-    "main.py": [
-      {
-        "id": "c5f8902a-750c-4015-bc79-f726c0bfa162",
-        "line": 57,
-        "version": 9120,
-        "index": 1116
       }
     ]
   }

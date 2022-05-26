@@ -5,17 +5,9 @@ start = ""
 from random import randint, uniform, choice, randrange
 import os
 from sys import stdout, float_info
-
-global PrimeorCompositeNumber
-global PrimeorCompositeRange
-global SquareorCubeNumber
-global SquareorCubeRange
-global Quiz
-global typewriter
-global chooseTP
-global colours
-global original_start
 import signal
+
+from time import time
 
 global score
 from termcolor import cprint
@@ -29,9 +21,6 @@ def print_linenum(signum, frame):
 
 signal.signal(signal.SIGINT, print_linenum)
 from time import sleep
-
-with open("test", "a+") as t:
-	t.write(f"{list(range(2 ** 15 - 1))}")
 
 
 def Prime(n):
@@ -97,23 +86,34 @@ def typewriter(t=""):
 		sleep(uniform(0, speed * 2))
 
 
-def intput(text):
-	"""Allows to accept integer input without worrying about the user typing something that is not an integer, which would return an error. Used just like input(). Example:\n `intput('Enter an integer.')`. Note that this depends on the `typewriter()` function."""
-	typewriter(text)
+def intput(text, mode=int):
+	"""Allows to accept integer input without worrying about the user typing something that is not an integer, which would return an error. Used just like input(). Example:\n `intput('Enter an integer.')`."""
+	try:
+		typewriter(text)
+	except:
+		print(text)
 	while True:
 		try:
-			n = int(input())
+			if mode == str:
+				n = spell.correction(str(input()))
+			else:
+				n = mode(eval(input()))
+		except EOFError:
+			leave = intput("Are you sure you want to leave?\n")
+			if leave.lower() != "y" and leave.lower() != "yes":
+				print("Exiting...")
+				exit()
 		except:
-			typewriter("Please input an integer (whole number): ")
+			if mode == int:
+				typewriter(f"Error: Please input an integer (whole number): ")
+			else:
+				typewriter(f"Error: Please type a number: ")
 		else:
 			return n
 
 
-try:
-	from spellchecker import SpellChecker
-except:
-	os.system("pip install pyspellchecker")
-	from spellchecker import SpellChecker
+from spellchecker import SpellChecker
+
 spell = SpellChecker()
 
 
@@ -174,9 +174,10 @@ def PowerandPrimeRange(primeorpower):
 		"The cube numbers between " + str(num1) + " and " + str(num2) + " are: "
 	)
 	squarenums = (
-		"The square numbers between " + str(num1) + " and " + str(num2) + " are: "
+		"The square numbers between " + str(num1) + "  and " + str(num2) + " are: "
 	)
-	for l in range(num1, num2 + 1):
+	l = num1
+	while l != (num2 + 1):
 		if primeorpower(l) == a:
 			squares += 1
 			squarenums = squarenums + str(l) + ", "
@@ -184,11 +185,13 @@ def PowerandPrimeRange(primeorpower):
 			cubesorprimes += 1
 			amount += 1
 	if primeorpower == SquareorCube:
-		for l in range(num1, num2 + 1):
+		l = num1
+		while l != (num2 + 1):
 			if primeorpower(l) == "cube":
 				cubesorprimes += 1
 				cubeorprimenums += str(l) + ", "
-		for l in range(num1, num2 + 1):
+		l = num1
+		while l != (num2 + 1):
 			if primeorpower(l) == "square":
 				squares = squares + 1
 				squarenums += str(l) + ", "
@@ -211,53 +214,48 @@ def PowerandPrimeRange(primeorpower):
 
 def Quiz(primeorpower):
 	"""A quiz that tests the user on their primes, squares and cubes using randomly generated questions with infinite levels. https://github.com/noneofyourbusiness1415252/Maths-stuff#how-questions-are-picked"""
+	score = 0
 	if primeorpower == Prime:
 		a = False
 		correct_a = "no"
 		b = True
 		c = a
 		correct_b = "yes"
-		level_type = "PL"
-		prompt = f"Is __  a prime number? Type 'yes' or 'no'. \n"
+		correct_c = correct_a
+		prompt = "Is __  a prime number? Type 'yes' or 'no'. \n"
+		level_type = "PrimeLevel"
 	else:
 		a = "square"
 		b = "cube"
 		c = "neither"
 		correct_a, correct_b, correct_c = a, b, c
-		level_type = "SOCL"
 		prompt = (
 			"Is __ a square number or cube number? Type 'both', 'square', 'cube' or"
 			" 'neither' accordingly. \n"
 		)
-	score = 0
-	try:
-		level = db[f"{owner}.{level_type}"]
-	except:
-		level = 1
-	highestLevel = int(level)
-	chooseLevel = intput("Choose a level from 1 to " + str(highestLevel) + "\nlevel> ")
-	while highestLevel < chooseLevel:
-		chooseLevel = intput("Invalid level, please try again.\nlevel> ")
-	level = chooseLevel
-	minimum = level ** 2 * 5
-	possible_questions = (level + 1) ** 2 * 5 - minimum
-	range_amount = possible_questions / 5
+		level_type = "SquareorCubeLevel"
+	difficulty = intput(
+		"How hard do you want the quiz to be? Type any number. A higher number = higher"
+		" difficulty."
+	)
 	i = 0
-	while i < 5:
+	while True:
+		start_range = round(i * difficulty ** 1.5)
+		end_range = round((i + 1) * difficulty ** 1.5)
 		powers = False
-		current_range = minimum + range_amount * i
-		for n in range(round(current_range), round(current_range + range_amount)):
+		n = start_range
+		while n != end_range:
 			if primeorpower(n) != c:
 				if not powers:
 					powers = []
 				powers.append(n)
-		if powers:
+			n += 1
+		Range = round(end_range - start_range)
+		if powers and randint(1, Range) != Range:
 			randnum = choice(powers)
 		else:
-			randnum = randint(current_range, current_range + range_amount)
-		typewriter(prompt.replace("__", str(randnum)))
-		answer = input("")
-		if Power(randnum, 2) and Power(randnum, 3):
+			randnum = randint(start_range, end_range)
+		if primeorpower(randnum) == "both":
 			correct = "both"
 		elif primeorpower(randnum) == a:
 			correct = correct_a
@@ -265,16 +263,23 @@ def Quiz(primeorpower):
 			correct = correct_b
 		else:
 			correct = correct_c
-		if spell.correction(answer.lower()) == correct:
+		start_time = time()
+		answer = intput(prompt.replace("__", str(randnum)), str)
+		end_time = time()
+		if answer.lower() == correct:
 			typewriter("Well done!")
-			score = score + 1
+			score += round(round((end_time - start_time) * randnum ** 0.75, 1) * 10)
+			print(f"\nscore: {score}")
 		else:
-			typewriter("Oops! The correct answer is:" + correct + ".")
+			try:
+				if db[f"{owner}.{level_type}"] < score:
+					print("High Score!")
+					db[f"{owner}.{level_type}"] = score
+			except:
+				db[f"{owner}.{level_type}"] = score
+			print(f"Game Over! Your score is: {score}")
+			break
 		i += 1
-	if score >= 5 and level == highestLevel:
-		highestLevel += 1
-		typewriter(f"Level up! You are now on level {str(highestLevel)}. Good job!")
-	db[f"{owner}.{level_type}"] = highestLevel
 	SwitchMode()
 
 
@@ -282,22 +287,20 @@ def typewriterSet():
 	"""Tool to change speed of typewriter effects."""
 	write = input("Do you want to turn on typewriter effects?")
 	if write.lower() == "yes":
-		speed = float(
-			input(
-				"Type a number to change speed of typewriter effect.\nNote that a lower"
-				" amount means a higher speed, because it is measured	in average"
-				" seconds delay between each letter.\nPress code, or go"
-				" to\nhttps://github.com/noneofyourbusiness1415252/Maths-stuff#readme\nfor"
-				" more information.\n"
-			)
+		speed = intput(
+			"Type a number to change speed of typewriter effect.\nNote that a lower"
+			" amount means a higher speed, because it is measured	in average"
+			" seconds delay between each letter.\nPress code, or go"
+			" to\nhttps://github.com/noneofyourbusiness1415252/Maths-stuff#readme\nfor"
+			" more information.\n",
+			float,
 		)
-		typewriter(
-			"This is how fast the effect will be. Are you happy with your changes?\n"
+		happy = intput(
+			"This is how fast the effect will be. Are you happy with your changes?\n",
+			str,
 		)
-		happy = input()
 		while happy.lower() == "no":
-			typewriter("Type a number to change speed.\n")
-			speed = float(input())
+			speed = intput("Type a number to change speed.\n", float)
 			typewriter(
 				"This is how fast the effect will be. Are you happy with you changes?"
 			)
@@ -311,21 +314,20 @@ def typewriterSet():
 
 def ColourSet():
 	"""Tool to configure the (multi)coloured text"""
-	typewriter("Do you want to turn on (multi)coloured text?")
-	coloured = input()
+	coloured = intput("Do you want to turn on (multi)coloured text?", str)
 	happy = "no"
 	if coloured.lower() == "yes" or coloured.lower() == "y":
-		while spell.correction(happy) != "yes" and happy != "y":
+		while happy != "yes" and happy != "y":
 			colours = []
 			while not "done" in colours and not "all" in colours:
-				typewriter(
+				c = intput(
 					"Enter any colour to add to the multicoloured text. Choose from:"
 					" red, green, yellow, blue, magenta, cyan or white. Type"
 					' "all" to use all available colours. If you type a colour multiple'
 					" times, it will appear more often than any other colours. Type"
-					' "done" when finished to preview your configuration.'
+					' "done" when finished to preview your configuration.',
+					str,
 				)
-				c = input()
 				colours.append(c)
 			if "all" in colours:
 				db[f"{owner}.colours"] = [
@@ -339,11 +341,11 @@ def ColourSet():
 				]
 			else:
 				db[f"{owner}.colours"] = colours
-			typewriter(
+			happy = intput(
 				"This is a preview of your configuration. Are you happy with your"
-				" changes?"
+				" changes?",
+				str,
 			)
-			happy = input()
 
 	else:
 		db[f"{owner}.colours"] = "white"
@@ -353,16 +355,14 @@ owner = os.environ["REPL_OWNER"]
 try:
 	nickname = db[f"{owner}.nickname"]
 except:
-	nickname = input(
+	nickname = intput(
 		"Optional: Enter a nickname.\nLeave blank to keep your replit username"
-		f" ({owner}) as your nickname\nnickname> "
+		f" ({owner}) as your nickname\nnickname> ",
+		str,
 	)
-	if owner == "five-nine":
-		typewriter(
-			f"Please sign in to repl.it before using this program. Exiting...{exit(59)}"
-		)
 	if nickname == "":
 		nickname = owner
+	db[f"{owner}.nickname"] = nickname
 try:
 	speed = db[f"{owner}.typespeed"]
 except:
@@ -394,34 +394,35 @@ def SwitchMode():
 	"""Used to switch modes in the maths stuff program."""
 	global start
 	if start == original_start:
-		typewriter(start)
-		start = input()
+		start = intput(start)
 	else:
-		typewriter("Do you want to switch modes?\n")
-		switch = input()
+		switch = intput("Do you want to switch modes?\n", str)
 		if switch.upper() == "YES":
-			typewriter(original_start)
-			start = input()
-	if start == "1":
-		PrimeorCompositeNumber()
-	elif start == "2":
-		PowerandPrimeRange(Prime)
-	elif start == "3":
-		SquareorCubeNumber()
-	elif start == "4":
-		PowerandPrimeRange(SquareorCube)
-	elif start == "5":
-		Quiz(Prime)
-	elif start == "6":
-		Quiz(SquareorCube)
-	elif start == "7":
-		typewriterSet()
-	elif start == "8":
-		ColourSet()
-	else:
-		start = input(
-			"Invalid option. Please type a number from 1 to 7 to choose a mode.\n"
-		)
+			start = intput(original_start)
+
+	def choose(start):
+		if start == 1:
+			PrimeorCompositeNumber()
+		elif start == 2:
+			PowerandPrimeRange(Prime)
+		elif start == 3:
+			SquareorCubeNumber()
+		elif start == 4:
+			PowerandPrimeRange(SquareorCube)
+		elif start == 5:
+			Quiz(Prime)
+		elif start == 6:
+			Quiz(SquareorCube)
+		elif start == 7:
+			typewriterSet()
+		elif start == 8:
+			ColourSet()
+		else:
+			return "e"
+
+	while choose(start) == "e":
+		start = intput("Oops! Please type a number from 1 to 9 to choose a mode.")
+		choose(start)
 
 
 SwitchMode()
